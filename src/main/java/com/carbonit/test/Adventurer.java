@@ -102,25 +102,6 @@ public class Adventurer {
 		}
 	}
 
-	public Square nextSquare() {
-		int positionX = 0;
-		int positionY = 0;
-
-		if (this.orientation.toString() == "N") {
-			positionY = this.positionY - 1;
-		} else if (this.orientation.toString() == "E") {
-			positionX = this.positionX + 1;
-		} else if (this.orientation.toString() == "S") {
-			positionY = this.positionY + 1;
-		} else {
-			positionX = this.positionX - 1;
-		}
-
-		Square square = new Square("P", positionX, positionY);
-
-		return square;
-	}
-
 	public void nextMove() {
 		if (this.indexMovement < this.movements.length() - 1) {
 			this.indexMovement++;

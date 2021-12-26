@@ -49,11 +49,15 @@ public class Serializer {
 								"Veuillez indiquer les dimensions de la carte en première ligne de fichier.");
 					}
 					squares[Integer.parseInt(lineArray[1])][Integer.parseInt(lineArray[2])].setType("M");
+					treasureMap.getMountains()
+							.add(squares[Integer.parseInt(lineArray[1])][Integer.parseInt(lineArray[2])]);
 					break;
 
 				case "T":
 					squares[Integer.parseInt(lineArray[1])][Integer.parseInt(lineArray[2])]
 							.setNumberOfTreasures(Integer.parseInt(lineArray[3]));
+					treasureMap.getTreasures()
+							.add(squares[Integer.parseInt(lineArray[1])][Integer.parseInt(lineArray[2])]);
 					break;
 
 				case "A":

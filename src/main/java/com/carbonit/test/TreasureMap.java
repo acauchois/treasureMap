@@ -8,11 +8,15 @@ public class TreasureMap {
 	private int height;
 	private Square[][] squares;
 	private ArrayList<Adventurer> adventurers;
+	private ArrayList<Square> mountains;
+	private ArrayList<Square> treasures;
 
 	public TreasureMap(int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.squares = new Square[width][height];
+		mountains = new ArrayList<Square>();
+		treasures = new ArrayList<Square>();
 	}
 
 	public ArrayList<Adventurer> getAdventurers() {
@@ -47,17 +51,33 @@ public class TreasureMap {
 		this.height = height;
 	}
 
+	public ArrayList<Square> getMountains() {
+		return mountains;
+	}
+
+	public void setMountains(ArrayList<Square> mountains) {
+		this.mountains = mountains;
+	}
+
+	public ArrayList<Square> getTreasures() {
+		return treasures;
+	}
+
+	public void setTreasures(ArrayList<Square> treasures) {
+		this.treasures = treasures;
+	}
+
 	public boolean isPassable(Square square, ArrayList<Adventurer> adventurers) {
 		boolean passable = true;
 
-		if (square.getType() == "M") {
+		if (square.getType().equals("M")) {
 			passable = false;
-		}
-
-		for (Adventurer adventurer : adventurers) {
-			if (adventurer.getPositionX() == square.getPositionX()
-					&& adventurer.getPositionY() == square.getPositionY()) {
-				passable = false;
+		} else {
+			for (Adventurer adventurer : adventurers) {
+				if (adventurer.getPositionX() == square.getPositionX()
+						&& adventurer.getPositionY() == square.getPositionY()) {
+					passable = false;
+				}
 			}
 		}
 
@@ -86,6 +106,23 @@ public class TreasureMap {
 		}
 
 		return possible;
+	}
+
+	public Square nextSquare(Adventurer adventurer) {
+		int positionX = adventurer.getPositionX();
+		int positionY = adventurer.getPositionY();
+
+		if (adventurer.getOrientation().toString() == "N") {
+			positionY = adventurer.getPositionY() - 1;
+		} else if (adventurer.getOrientation().toString() == "E") {
+			positionX = adventurer.getPositionX() + 1;
+		} else if (adventurer.getOrientation().toString() == "S") {
+			positionY = adventurer.getPositionY() + 1;
+		} else {
+			positionX = adventurer.getPositionX() - 1;
+		}
+
+		return this.squares[positionX][positionY];
 	}
 
 	public void executeSequence(Adventurer adventurer) {
